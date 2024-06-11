@@ -24,7 +24,7 @@ const initServer = (botInstance:any) => {
 
     app.get("/qr", async (_, res) => {
         const PATH_QR = join(process.cwd(), `bot.qr.png`);
-        console.log('RUTA DEL QR:', PATH_QR);
+        console.log('RUTA DEL QR1:', PATH_QR);
         const fileStream = createReadStream(PATH_QR);
         fileStream.on('data', (chunk) => {
             console.log(chunk.toString('base64'));
