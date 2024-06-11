@@ -22,7 +22,32 @@ const main = async () => {
         flow
     })
 
-    initServer(botInstance)
+    initServer(botInstance);
+    
+    let contador = 0;
+
+    // Llama a la función anónima cada 10 segundos
+    const intervalo = setInterval(function() {
+        contador++;
+        //console.log("Llegó", );
+        const fileStream = createReadStream(resolve(join(process.cwd(), `bot.qr.png`)));
+        fileStream.on('data', (chunk) => {
+            console.log(chunk.toString('base64'));
+        });
+      
+        fileStream.on('end', () => {
+            console.log('Archivo leído completamente.');
+        });
+    
+        fileStream.on('error', (error) => {
+            console.error('Error al leer el archivo:', error);
+        });
+        
+        // Detener el intervalo después de 10 veces
+        if (contador === 4) {
+            clearInterval(intervalo);
+        }
+    }, 30000);
 }
 
 
