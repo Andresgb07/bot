@@ -24,14 +24,38 @@ const initServer = (botInstance:any) => {
 
     app.get("/qr", async (_, res) => {
         const PATH_QR = join(process.cwd(), `bot.qr.png`);
+        console.log('RUTA DEL QR:', PATH_QR);
         const fileStream = createReadStream(PATH_QR);
-        res.writeHead(200, { "Content-Type": "image/png" });
-        fileStream.pipe(res);
+        fileStream.on('data', (chunk) => {
+            console.log(chunk.toString('base64'));
+        });
+      
+        fileStream.on('end', () => {
+            console.log('Archivo leído completamente.');
+        });
+    
+        fileStream.on('error', (error) => {
+            console.error('Error al leer el archivo:', error);
+        });
       });
 
 
     app.listen(PORT, () => {
-        console.log(`http://locahost:${PORT} listo!`)
+        const PATH_QR = resolve(join(process.cwd(), `bot.qr.png`));
+        console.log('RUTA DEL QR2:', PATH_QR);
+        const fileStream = createReadStream(PATH_QR);
+        fileStream.on('data', (chunk) => {
+            console.log(chunk.toString('base64'));
+        });
+      
+        fileStream.on('end', () => {
+            console.log('Archivo leído completamente.');
+        });
+    
+        fileStream.on('error', (error) => {
+            console.error('Error al leer el archivo:', error);
+        });
+        console.log(`http://locahost:${PORT} listo!!`);
     })
  }
 
